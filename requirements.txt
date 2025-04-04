@@ -1,0 +1,3 @@
+aiokafka
+confluent_kafka
+load_dotenv
