@@ -1,3 +1,6 @@
 aiokafka
 confluent_kafka
+fastapi
 load_dotenv
+uvicorn
+websockets

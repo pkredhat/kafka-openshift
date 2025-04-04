@@ -1,0 +1,154 @@
+/* public/styles.css */
+
+
+/* Import Red Hat Display from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&display=swap');
+
+
+/* BASIC RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* MAIN LAYOUT & THEME */
+  body {
+    font-family: 'Red Hat Display', sans-serif;
+    background: linear-gradient(135deg, #d10000 0%, #ff3b3b 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* HEADER */
+  header {
+    position: relative;       /* For absolute positioning of the logo */
+    text-align: center;       /* Centers the H1 text */
+    padding: 2rem 0;          /* Top/bottom spacing */
+    background: #151515;
+    font-family: 'Red Hat Display', sans-serif;
+  }
+  
+  /* Logo pinned far left */
+  header img {
+    position: absolute;
+    left: 1rem;               /* Distance from left edge */
+    top: 50%;                 /* Vertical center relative to header's height */
+    transform: translateY(-50%);
+    height: 56px;             /* Scaled ~30% smaller from 80px */
+    width: auto;              /* Maintain aspect ratio */
+    margin-right: 1rem;       /* Space after the logo if needed */
+  }
+  
+  /* Heading is centered by header's text-align */
+  header h1 {
+    font-size: 1.75rem;
+    color: #fff;
+    display: inline-block;    /* Let the heading be sized by content, not full width */
+  }
+  
+  /* MAIN CONTENT CARD */
+  main {
+    width: 100%;
+    max-width: 720px;
+    margin: 2rem auto;
+    background-color: #fffafa; /* Slight pinkish tint to complement red */
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+  
+  .content {
+    padding: 2rem;
+  }
+  
+  .subtitle {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    color: #555;
+  }
+  
+  /* MESSAGE LIST */
+  #messages {
+    list-style: none;
+  }
+  
+  #messages li {
+    background-color: #ffe5e5; /* Light red/pink background */
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    word-break: break-word;
+  }
+  
+  #messages li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  /* FOOTER */
+  footer {
+    text-align: center;
+    color: #fff;
+    margin-top: auto;
+    padding: 1rem 0;
+    background: #090513;
+    font-size: 0.9rem;
+  }
+  
+
+
+  /* Style for the topic change container */
+.topic-change {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+  
+  /* Style for the input box */
+  .topic-change input {
+    width: 300px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .topic-change input:focus {
+    outline: none;
+    border-color: #ff3b3b;
+    box-shadow: 0 0 5px rgba(255, 59, 59, 0.5);
+  }
+  
+  /* Style for the button */
+  .topic-change button {
+    padding: 0.55rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: #ff3b3b;
+    border: 2px solid #ff3b3b;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .topic-change button:hover {
+    background: #d10000;
+    border-color: #d10000;
+    box-shadow: 0 2px 5px rgba(209, 0, 0, 0.5);
+  }
+  
+  .topic-change button:active {
+    transform: translateY(1px);
+  }
+  

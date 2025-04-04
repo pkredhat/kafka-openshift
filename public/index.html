@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kafka Real-Time Consumer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Link to external stylesheet -->
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <!-- HEADER WITH LOGO & CENTERED TITLE -->
+  <header>
+    <img src="/static/logo.png" alt="Red Hat Logo" />
+    <h1>Kafka Real-Time Consumer</h1>
+  </header>
+
+  <!-- NEW: Topic Change Search Box -->
+  <div class="topic-change">
+    <input type="text" id="topicInput" placeholder="Enter new Kafka topic" />
+    <button id="changeTopicBtn">Change Topic</button>
+  </div>
+
+  <main>
+    <div class="content">
+      <p class="subtitle">Messages from Kafka will appear below in real time:</p>
+      <ul id="messages"></ul>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2023 My Awesome Project
+  </footer>
+
+  <script>
+    // Connect to the WebSocket endpoint
+    const ws = new WebSocket(`ws://${window.location.host}/ws`);
+
+    ws.onmessage = function (event) {
+      const msgList = document.getElementById("messages");
+      const newItem = document.createElement("li");
+      newItem.textContent = event.data;
+      msgList.appendChild(newItem);
+    };
+
+    ws.onopen = function() {
+      console.log("WebSocket connection established.");
+    };
+
+    ws.onclose = function() {
+      console.log("WebSocket connection closed.");
+    };
+
+    // Topic change functionality
+    document.getElementById("changeTopicBtn").addEventListener("click", async () => {
+      const topic = document.getElementById("topicInput").value.trim();
+      if (!topic) {
+        alert("Please enter a topic.");
+        return;
+      }
+      try {
+        const response = await fetch("/change_topic", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ topic })
+        });
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error("Error changing topic:", error);
+        alert("Failed to change topic.");
+      }
+    });
+  </script>
+</body>
+</html>
