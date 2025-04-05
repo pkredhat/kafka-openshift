@@ -61,6 +61,7 @@
   
   .content {
     padding: 2rem;
+    padding-top: 1rem;
   }
   
   .subtitle {
@@ -152,3 +153,9 @@
     transform: translateY(1px);
   }
   
+  #currentTopicLabel {
+    display: block;
+    font-size: 1.1em;
+    color: #333;
+    padding: 1rem;
+  }

@@ -4,23 +4,21 @@
   <meta charset="UTF-8" />
   <title>Kafka Real-Time Consumer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <!-- HEADER WITH LOGO & CENTERED TITLE -->
   <header>
     <img src="/static/logo.png" alt="Red Hat Logo" />
     <h1>Kafka Real-Time Consumer</h1>
   </header>
 
-  <!-- NEW: Topic Change Search Box -->
+  <!-- Topic Change Input -->
   <div class="topic-change">
     <input type="text" id="topicInput" placeholder="Enter new Kafka topic" />
     <button id="changeTopicBtn">Change Topic</button>
   </div>
-
   <main>
+    <label id="currentTopicLabel"><strong>Current topic:</strong> <span id="currentTopic">Not set</span></label>
     <div class="content">
       <p class="subtitle">Messages from Kafka will appear below in real time:</p>
       <ul id="messages"></ul>
@@ -28,11 +26,10 @@
   </main>
 
   <footer>
-    &copy; 2023 My Awesome Project
+    &copy; 2025 Red Hat Launch Team
   </footer>
 
   <script>
-    // Connect to the WebSocket endpoint
     const ws = new WebSocket(`ws://${window.location.host}/ws`);
 
     ws.onmessage = function (event) {
@@ -40,17 +37,12 @@
       const newItem = document.createElement("li");
       newItem.textContent = event.data;
       msgList.appendChild(newItem);
+      msgList.scrollTop = msgList.scrollHeight; // Auto-scroll
     };
 
-    ws.onopen = function() {
-      console.log("WebSocket connection established.");
-    };
+    ws.onopen = () => console.log("WebSocket connection established.");
+    ws.onclose = () => console.log("WebSocket connection closed.");
 
-    ws.onclose = function() {
-      console.log("WebSocket connection closed.");
-    };
-
-    // Topic change functionality
     document.getElementById("changeTopicBtn").addEventListener("click", async () => {
       const topic = document.getElementById("topicInput").value.trim();
       if (!topic) {
@@ -66,10 +58,18 @@
           body: JSON.stringify({ topic })
         });
         const result = await response.json();
-        alert(result.message);
+        //alert(result.message);
+        document.getElementById("currentTopic").textContent = topic;
+        document.getElementById("messages").innerHTML = ""; // Clear messages
       } catch (error) {
         console.error("Error changing topic:", error);
         alert("Failed to change topic.");
+      }
+    });
+
+    document.getElementById("topicInput").addEventListener("keyup", function (e) {
+      if (e.key === "Enter") {
+        document.getElementById("changeTopicBtn").click();
       }
     });
   </script>

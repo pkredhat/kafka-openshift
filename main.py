@@ -1,5 +1,6 @@
 import os
 import asyncio
+import time
 from typing import List
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse
@@ -24,7 +25,8 @@ async def consume_kafka_messages(topic: str):
     consumer = AIOKafkaConsumer(
         topic,
         bootstrap_servers=os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"),
-        group_id="my-realtime-consumer-group",
+        group_id = f"rewind-{int(time.time())}",
+        #group_id="my-realtime-consumer-group",
         auto_offset_reset="earliest"
     )
     await consumer.start()
