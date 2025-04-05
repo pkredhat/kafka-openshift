@@ -1,13 +1,14 @@
 import os
 import asyncio
+import argparse
 from aiokafka import AIOKafkaConsumer
 import uuid
 
-async def consume():
+async def consume(topic: str):
     # Read environment variable for bootstrap servers.
     bootstrap_servers = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-    topic = "test-topic"
-    #group_id = "test-group"
+    
+    # Use a unique group id for each run
     group_id = f"test-group-{uuid.uuid4()}"
     
     if not bootstrap_servers:
@@ -19,7 +20,6 @@ async def consume():
     # Create an AIOKafkaConsumer instance with your config.
     consumer = AIOKafkaConsumer(
         topic,
-        loop=asyncio.get_event_loop(),
         bootstrap_servers=bootstrap_servers,
         group_id=group_id,
         auto_offset_reset='earliest'
@@ -37,10 +37,11 @@ async def consume():
         await consumer.stop()
         print("Kafka consumer stopped.")
 
-
-# For local testing: run this file directly to start consuming
 if __name__ == "__main__":
+    # Prompt the user for a Kafka topic. If none is entered, default to 'test-topic'.
+    user_topic = input("Enter Kafka topic (default 'test-topic'): ")
+    topic = user_topic.strip() or "test-topic"
     try:
-        asyncio.run(consume())
+        asyncio.run(consume(topic))
     except KeyboardInterrupt:
         pass
